@@ -7,10 +7,16 @@ library(tximport)
 library(GenomicFeatures)
 library(tidyr)
 
-gtf_file = "/data/CEM/shared/public_data/references/GENCODE/gencode.v29.annotation.gtf"
-samples_name = "/scratch/tphung3/SexInference/RNAseq/samples_name.txt"
-quant_dir = "/scratch/tphung3/SexInference/RNAseq/placenta_batch_1/"
-outfile = "/scratch/tphung3/SexInference/RNAseq/placenta_batch_1_data_for_regression.csv"
+args = commandArgs(trailingOnly=TRUE)
+gtf_file = args[1] #example: /data/CEM/shared/public_data/references/GENCODE/gencode.v29.annotation.gtf
+samples_name = args[2] #example: "/scratch/tphung3/SexInference/RNAseq/samples_name.txt"
+quant_dir = args[3] #example: "/scratch/tphung3/SexInference/RNAseq/placenta_batch_1/"
+outfile = args[4] #example: "/scratch/tphung3/SexInference/RNAseq/placenta_batch_1_data_for_regression.csv"
+
+# gtf_file = "/data/CEM/shared/public_data/references/GENCODE/gencode.v29.annotation.gtf"
+# samples_name = "/scratch/tphung3/SexInference/RNAseq/samples_name.txt"
+# quant_dir = "/scratch/tphung3/SexInference/RNAseq/placenta_batch_1/"
+# outfile = "/scratch/tphung3/SexInference/RNAseq/data_for_regression.csv"
 
 txdb = makeTxDbFromGFF(gtf_file)
 
