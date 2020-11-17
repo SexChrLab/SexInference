@@ -8,6 +8,10 @@ Infer sex from DNA sequencing data and RNA sequencing data
     - On the other hand, we observe that when mapping a genetic XY female individual to a reference genome, the ratio in reads mapped between the X chromosome and chromosome 19 is low (<50%) while the ratio in reads mapped between the Y chromosome and chr19 and the ratio in reads mapped between the Y chromosome and the X chromosome is relatively high (at least greater than 5%)
     - To infer sex from DNAseq data, we are going to leverage these observation and make prediction about whether the sample is likely to be XX female or XY male bsaed on the ratio in reads mapped between the X chromosome and chr19, between the Y chromosome and chr19, and between the X and the Y chromosomes. 
     
+##### Required programs:
+- Samtools 1.7
+- Python 3.8.5
+    
 ##### Step 1: Download the github repo:
 ```
 git clone https://github.com/SexChrLab/SexInference.git
