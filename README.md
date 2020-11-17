@@ -1,8 +1,48 @@
 # SexInference
 Infer sex from DNA sequencing data and RNA sequencing data
 
+## DNAseq
+- Scripts are under `DNAseq`
+- General idea: 
+    - Empirically, we observe that when mapping a genetic XX female individual to a reference genome, the ratio in reads mapped between the X chromosome and a chromosome on the autosomes (for example, chr19) is relatively high (>50%) while the ratio in reads mapped between the Y chromosome and chr19 and the ratio in reads mapped between the Y chromosome and the X chromosome is low (<1%). 
+    - On the other hand, we observe that when mapping a genetic XY female individual to a reference genome, the ratio in reads mapped between the X chromosome and chromosome 19 is low (<50%) while the ratio in reads mapped between the Y chromosome and chr19 and the ratio in reads mapped between the Y chromosome and the X chromosome is relatively high (at least greater than 5%)
+    - To infer sex from DNAseq data, we are going to leverage these observation and make prediction about whether the sample is likely to be XX female or XY male bsaed on the ratio in reads mapped between the X chromosome and chr19, between the Y chromosome and chr19, and between the X and the Y chromosomes. 
+    
+##### Step 1: Download the github repo:
+```
+git clone https://github.com/SexChrLab/SexInference.git
+```
+
+##### Step 2: Infer sex from mapped bam files
+- The script takes in as input a bam file that has been mapped to a default reference genome. If you start with the fastq files, you need to map the fastq files to an appropriate reference genome. 
+
+- This is how the script is run:
+```
+python infer_sex_from_readsmapped.py --sample {sample_id} --bam_path {/path/to/bam/} --out_dir {/path/to/output/directory}
+```
+
+- After the script is successfully run, it produces a directory with the same name as the sample id inside the output directory. 4 files are found under this directory:
+    - chr19_bam_stat.txt: output from running samtools stats on chr19
+    - chrX_bam_stat.txt: output from running samtools stats on chrX
+    - chrY_bam_stat.txt: output from running samtools stats on chrY
+    - {sample_id}_summary.tsv: a summary file with the following columns:
+        - sample: sample id
+        - chr19: number of reads mapped for chr19
+        - chrX: number of reads mapped for chrX
+        - chrY: number of reads mapped for chrY
+        - X/19: ratio in reads mapped between chrX and chr19
+        - Y/19: ratio in reads mapped between chrY and chr19
+        - Y/X: ratio in reads mapped between chrY and chrX
+        - sex_prediction: either probable_XX or probable_XY
+        
+##### How to use this script:
+- We anticipate that there are 2 ways that you can use this script for. 
+- If you want to know the probable sex of a sample, you can run the script for your sample, and check the summary file to see what we think the probable sex to be, based on our observation of X/19, Y/19, and Y/X ratios
+- If you have a lot of samples in your study, and you have the information whether the sample was reported as male or female, you can run the scripts for all of these samples and plot X/19, Y/19 and Y/X ratios for all of the reported female samples and for all of the reported male samples. This visualization allows you to check if there's any sample that are different from the rest of the samples in terms of X/19, Y/19, and Y/X ratios. 
+
+
 ## RNAseq
-- Scripts is under `RNAseq`
+- Scripts are under `RNAseq`
 
 #### In Human
 - General idea: we observed that gene expressions from XIST (female-specific) and Y-linked genes IF1AY, KDM5D, UTY, DDX3Y, and RPS4Y1 are indicative of sex. Therefore, to infer sex from RNAseq data, we fit a logistic regression model using gene expression from these six genes as predictor variables using the GTEx data and predict sex on any new data based on the model build on the GTEx data.
