@@ -48,6 +48,9 @@ python infer_sex_from_readsmapped.py --sample {sample_id} --bam_path {/path/to/b
 ## RNAseq
 - Scripts are under `RNAseq`
 
+#### Required programs:
+- These R packages are needed to run: tximport, GenomicFeatures, tidyr, tidyverse, dplyr, caret, and glmnet. 
+
 #### In Human
 - General idea: we observed that gene expressions from XIST (female-specific) and Y-linked genes IF1AY, KDM5D, UTY, DDX3Y, and RPS4Y1 are indicative of sex. Therefore, to infer sex from RNAseq data, we fit a logistic regression model using gene expression from these six genes as predictor variables using the GTEx data and predict sex on any new data based on the model build on the GTEx data.
 - Below are the steps to infer sex on RNAseq data for any new dataset:
