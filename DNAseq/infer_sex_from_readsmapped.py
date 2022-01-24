@@ -34,7 +34,7 @@ def classify_sex(X_19_ratio, Y_19_ratio, Y_X_ratio):
     :param Y_X_ratio:
     :return: either "male" or "female"
     """
-    if X_19_ratio >= 0.5 and Y_19_ratio <= 0.01 and Y_19_ratio <= 0.01:
+    if X_19_ratio >= 0.5 and Y_19_ratio <= 0.01 and Y_X_ratio <= 0.01:
         return "probable_XX"
     else:
         return "probable_XY"
