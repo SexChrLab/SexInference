@@ -63,7 +63,7 @@ git clone https://github.com/SexChrLab/SexInference.git
 
 ##### Step 2: Run quantification using salmon
 - You will need to run salmon on your samples but see script `salmon_snakemake.snakefile` for an example of how to set up salmon. 
-- The pipeline currently works with the reference transcriptome `gencode.v29.transcripts.fa` (https://www.gencodegenes.org/human/release_29.html). It is important that this version of the reference genome is used when running quantification because we are matching the transcript IDs to the gene IDs for this version of the transcriptome in Step 3. If you are using a different version of the transcriptome, please see where to edit the gene names in Step 3 below. 
+- The pipeline currently works with the reference transcriptome `gencode.v29.transcripts.fa` (https://www.gencodegenes.org/human/release_29.html) (command: wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/gencode.v29.transcripts.fa.gz). It is important that this version of the reference genome is used when running quantification because we are matching the transcript IDs to the gene IDs for this version of the transcriptome in Step 3. If you are using a different version of the transcriptome, please see where to edit the gene names in Step 3 below. 
 #### Step 3: Convert transcript level to gene level
 - Because salmon generates counts for transcripts, and because we find that expression at the gene level is clearer for predicting sex, we convert transcript level to gene level for the 6 genes using the script `tximport.R`. This script outputs a CSV file with 7 columns. The first 6 columns are the counts for the genes XIST, IF1AY, KDM5D, UTY, DDX3Y, and RPS4Y1 and the last column is the reported sex. 
 - Usage:
